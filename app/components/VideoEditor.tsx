@@ -86,8 +86,18 @@ export default function VideoEditor() {
       const realY = Math.round(box.y * scaleFactor);
       const realW = Math.round(box.w * scaleFactor);
       const realH = Math.round(box.h * scaleFactor);
+
+
+      // ✅ NEW (Fixes the URL Error):
+      // We combine your current website URL + the rewrite path
+      const proxyUrl = typeof window !== 'undefined' 
+      ? `${window.location.origin}/ai-backend` 
+      : "http://localhost:3000/ai-backend";
+
+      console.log("Connecting to Tunnel:", proxyUrl); // Debug print
+
       
-      const app = await Client.connect("/ai-backend");
+      const app = await Client.connect(proxyUrl);
 
       const result = await app.predict("/predict", [ 
         handle_file(videoFile), 
@@ -107,7 +117,7 @@ export default function VideoEditor() {
       } else if (output.url) {
           videoUrl = output.url;
       } else if (output.path) {
-          videoUrl = `ai-backend/file=${output.path}`;
+          videoUrl = `${proxyUrl}/file=${output.path}`;
       }
 
       if (videoUrl) {
