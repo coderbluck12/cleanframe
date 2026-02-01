@@ -1,0 +1,11 @@
+gradio
+torch
+torchvision
+numpy
+scipy
+opencv-python
+scikit-image
+imageio
+imageio-ffmpeg
+tqdm
+einops
