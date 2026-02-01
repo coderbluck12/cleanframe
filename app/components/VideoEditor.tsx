@@ -86,10 +86,8 @@ export default function VideoEditor() {
       const realY = Math.round(box.y * scaleFactor);
       const realW = Math.round(box.w * scaleFactor);
       const realH = Math.round(box.h * scaleFactor);
-
-      const BACKEND_URL = "https://7060-01kgbm9xwr5p9nf7ge8tdt3y1k.cloudspaces.litng.ai"; 
       
-      const app = await Client.connect(BACKEND_URL);
+      const app = await Client.connect("/ai-backend");
 
       const result = await app.predict("/predict", [ 
         handle_file(videoFile), 
@@ -109,7 +107,7 @@ export default function VideoEditor() {
       } else if (output.url) {
           videoUrl = output.url;
       } else if (output.path) {
-          videoUrl = `${BACKEND_URL}/file=${output.path}`;
+          videoUrl = `ai-backend/file=${output.path}`;
       }
 
       if (videoUrl) {
